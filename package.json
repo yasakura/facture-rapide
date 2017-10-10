@@ -1,0 +1,38 @@
+{
+  "name": "helloworld",
+  "displayName": "HelloCordova",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "ios": "rm -rf www && webpack --config webpack.config.js && cordova run ios",
+    "start": "webpack-dev-server"
+  },
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "path": "^0.12.7",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0",
+    "html-webpack-plugin": "^2.29.0"
+  },
+  "dependencies": {
+    "cordova-ios": "^4.4.0",
+    "cordova-plugin-whitelist": "^1.3.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": [
+      "ios"
+    ]
+  }
+}
