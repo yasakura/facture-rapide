@@ -1,5 +1,8 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const fs = require('fs');
+
+const babelSettings = JSON.parse(fs.readFileSync('.babelrc')).presets;
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template: __dirname + '/src/index.html',
@@ -23,7 +26,11 @@ module.exports = {
             exclude: [
               path.resolve(__dirname, "node_modules")
             ],
-            loader: 'babel-loader'
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              presets: babelSettings,
+            },
           }
       ]
     },
