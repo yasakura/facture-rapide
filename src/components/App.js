@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Card, Row, Input, Col } from 'react-materialize';
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +18,15 @@ export default class App extends React.Component {
   }
 
   createPDF() {
-    alert(`PDF : ${JSON.stringify(this.state.data)}`);
+    // alert(`PDF : ${JSON.stringify(this.state.data)}`);
+    window.cordova.plugins.pdf.htmlToPDF({
+      url: 'http://www.google.fr',
+      documentSize: 'A4',
+      landscape: 'portrait',
+      type: 'share',
+    }, (success) => this.success, (error) => this.error
+    // }, (sucess) => alert('sucess: ' + sucess), (error) => alert('error:' + error)
+    );
   }
 
   render() {
@@ -28,6 +35,10 @@ export default class App extends React.Component {
         <h2 className="center-align">Création d&apos;une facture</h2>
         <Row>
           <Col s={12}>
+
+            <div className="center-align">
+              <Button onClick={this.createPDF}>Créer la facture</Button>
+            </div>
             <Card title="Informations">
               <Row>
                 <Input type="date" label="Date" s={12} />
@@ -73,10 +84,6 @@ export default class App extends React.Component {
                 <Input label="Date limite de paiement" s={12} defaultValue={this.state.data.input_20} onChange={this.handleInputChange} />
               </Row>
             </Card>
-
-            <div className="center-align">
-              <Button onClick={this.createPDF}>Créer la facture</Button>
-            </div>
           </Col>
         </Row>
       </div>
