@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, Row, Input, Col } from 'react-materialize';
+import Pdf from './Pdf';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -19,14 +20,18 @@ export default class App extends React.Component {
 
   createPDF() {
     // alert(`PDF : ${JSON.stringify(this.state.data)}`);
-    window.cordova.plugins.pdf.htmlToPDF({
-      url: 'http://www.google.fr',
-      documentSize: 'A4',
-      landscape: 'portrait',
-      type: 'share',
-    }, (success) => this.success, (error) => this.error
-    // }, (sucess) => alert('sucess: ' + sucess), (error) => alert('error:' + error)
-    );
+
+    if (window.cordova) {
+      window.cordova.plugins.pdf.htmlToPDF({
+        url: Pdf(this.state.data),
+        documentSize: 'A4',
+        landscape: 'portrait',
+        type: 'share',
+        fileName: 'toto.pdf',
+      }, (success) => this.success, (error) => alert('error:' + error));
+    } else {
+      Pdf(this.state.data);
+    }
   }
 
   render() {
