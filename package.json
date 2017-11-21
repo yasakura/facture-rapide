@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "ios": "rm -rf www && webpack --config webpack.config.js && cordova run ios",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "cordova": "cordova $1"
   },
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
@@ -26,7 +27,8 @@
   "dependencies": {
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-polyfill": "^6.26.0",
-    "cordova-ios": "^4.5.3",
+    "cordova": "^7.1.0",
+    "cordova-ios": "^4.5.4",
     "cordova-pdf-generator": "^1.5.6",
     "cordova-plugin-whitelist": "^1.3.2",
     "eslint-config-airbnb": "^15.1.0",
