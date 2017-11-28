@@ -28,7 +28,7 @@ const Pdf = (props) => {
   doc.setTextColor(56, 56, 57);
 
   newLineHeight(20);
-  doc.text(`Code & Smile`, marginLeft, topPosition);
+  doc.text(`${props.input_3}`, marginLeft, topPosition);
   // doc.text(`Code & Smile ${props.input_1}!`, marginLeft, 28);
   doc.setTextColor('#8a8a8a');
   doc.text('FACTURE', marginRight, topPosition, null, null, 'right');
@@ -37,16 +37,16 @@ const Pdf = (props) => {
   doc.setFontSize(12);
 
   newLineHeight(marginTextBottom);
-  doc.text(`88 Rue de chatillon, 92140 Clamart`, marginLeft, topPosition);
+  doc.text(`${props.input_4}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`Tel : +33 (0)7 56 93 40 50`, marginLeft, topPosition);
+  doc.text(`Tel : ${props.input_5}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`E-mail : freelance@ljamal.net`, marginLeft, topPosition);
+  doc.text(`E-mail : ${props.input_6}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2);
-  doc.text(`Objet : Prestation de développements informatiques`, marginLeft, topPosition);
+  doc.text(`Objet : ${props.input_2}`, marginLeft, topPosition);
 
   doc.setLineWidth(0.3);
   doc.setDrawColor(184, 184, 184);
@@ -57,19 +57,19 @@ const Pdf = (props) => {
   doc.setFont('helvetica', 'bold');
   doc.text('Adressée à :', marginLeft, topPosition);
   doc.text('Facture n° :', marginRight - 28, topPosition, null, null, 'right');
-  doc.text('CS2017-010', marginRight, topPosition, null, null, 'right');
+  doc.text(`${props.input_1}`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.setFont('helvetica', 'normal');
-  doc.text(`CROSSQUANTUM`, marginLeft, topPosition);
+  doc.text(`${props.input_12}`, marginLeft, topPosition);
   doc.text('Date :', marginRight - 28, topPosition, null, null, 'right');
   doc.text('26/10/2017', marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
-  doc.text('7 rue Belgrand, 92300 Levallois-Perret', marginLeft, topPosition);
+  doc.text(`${props.input_13}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text('SIREN : 814 770 855 R.C.S. Nanterre', marginLeft, topPosition);
+  doc.text(`SIREN : ${props.input_12}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('N° de TVA Intra : FR71 814770855', marginLeft, topPosition);
