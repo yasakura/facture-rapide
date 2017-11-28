@@ -109,8 +109,7 @@ const Pdf = (props) => {
   doc.text('Total TTC à payer', colThree, topPosition, null, null, 'right');
   doc.text('10,494.00 €', marginRight, topPosition, null, null, 'right');
 
-  doc.setDrawColor(184, 184, 184);
-  newLineHeight(marginTextBottom);
+  newLineHeight(marginTextBottom + 65);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
 
   newLineHeight(marginTextBottom);
@@ -147,9 +146,12 @@ const Pdf = (props) => {
   doc.line(marginLeft, topPosition + 4, marginRight, topPosition + 4); // x, start y, width, end y
 
   newLineHeight(marginTextBottom * 1.7);
-  const toto = 'Aucun escompte pour règlement anticipé.\nEn application de la loi n°92-1442 du 31.12.1992, les factures sont payables à l\'échéance indiquée.\nTout règlement effectué après expiration de ce délai donnera lieu, à titre de pénalité de retard, à l’application d’un intérêt égal à celui appliqué par la Banque Centrale Européenne à son opération de refinancement la plus récente, majoré de 10 points de pourcentage, ainsi qu\'une indemnité forfaitaire de 40 € pour frais de recouvrement.';
-  const textLines = doc.setFont('helvetica', 'normal').setFontSize(6.5).splitTextToSize(toto, 180);
+  const textEnd = 'Aucun escompte pour règlement anticipé.\nEn application de la loi n°92-1442 du 31.12.1992, les factures sont payables à l\'échéance indiquée.\nTout règlement effectué après expiration de ce délai donnera lieu, à titre de pénalité de retard, à l’application d’un intérêt égal à celui appliqué par la Banque Centrale Européenne à son opération de refinancement la plus récente, majoré de 10 points de pourcentage, ainsi qu\'une indemnité forfaitaire de 40 € pour frais de recouvrement.';
+  const textLines = doc.setFont('helvetica', 'normal').setFontSize(6.5).splitTextToSize(textEnd, 175);
   doc.text(textLines, marginLeft, topPosition);
+
+  newLineHeight(marginTextBottom * 2.5);
+  doc.text('Code & Smile, SARL au capital de 1 000 € - N° TVA intracommunautaire : FR 75 822985172 - SIREN : 822 985 172 R.C.S. Nanterre', marginLeft, topPosition);
 
   if (window.cordova) {
     // For save iPhone :
