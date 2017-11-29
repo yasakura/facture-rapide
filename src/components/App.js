@@ -86,7 +86,8 @@ export default class App extends React.Component {
                 <Input label="Description (ligne 2)" s={12} defaultValue={this.state.data.input_17} onChange={this.handleInputChange} />
                 <Input label="Tarif journalier" s={12} defaultValue={this.state.data.input_18} onChange={this.handleInputChange} />
                 <Input label="Nombre de jour travaillé" s={12} defaultValue={this.state.data.input_19} onChange={this.handleInputChange} />
-                <Input label="Date limite de paiement" s={12} defaultValue={this.state.data.input_20} onChange={this.handleInputChange} />
+                {/* <Input label="Date limite de paiement" s={12} defaultValue={this.state.data.input_20} onChange={this.handleInputChange} /> */}
+                <Input type="date" label="Date limite de paiement" s={12} />
               </Row>
             </Card>
           </Col>

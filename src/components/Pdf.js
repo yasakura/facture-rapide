@@ -69,10 +69,10 @@ const Pdf = (props) => {
   doc.text(`${props.input_13}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`SIREN : ${props.input_12}`, marginLeft, topPosition);
+  doc.text(`SIREN : ${props.input_14}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text('N° de TVA Intra : FR71 814770855', marginLeft, topPosition);
+  doc.text(`N° de TVA Intra : ${props.input_15}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2);
   doc.setDrawColor(56, 56, 57);
@@ -87,13 +87,13 @@ const Pdf = (props) => {
 
   newLineHeight(marginTextBottom + 6);
   doc.setFont('helvetica', 'normal');
-  doc.text('Mission CROSSQUANTUM - Lionel JAMAL', marginLeft, topPosition);
-  doc.text('530.00 €', colTwo, topPosition, null, null, 'right');
-  doc.text('16.5', colThree, topPosition, null, null, 'right');
+  doc.text(`${props.input_16}`, marginLeft, topPosition);
+  doc.text(`${props.input_18} €`, colTwo, topPosition, null, null, 'right');
+  doc.text(`${props.input_19}`, colThree, topPosition, null, null, 'right');
   doc.text('8,745.00 €', marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
-  doc.text('Du 01/10/2017 au 31/10/2017', marginLeft, topPosition);
+  doc.text(`${props.input_17}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom + 10);
   doc.text('Sous-total H.T.', colThree, topPosition, null, null, 'right');
@@ -116,11 +116,11 @@ const Pdf = (props) => {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   doc.text('Date limite de paiement : ', footerColOne, topPosition, null, null, 'right');
-  doc.text('15/10/2017', footerColTwo, topPosition);
+  doc.text(`${props.input_20}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('Mode de paiement : ', footerColOne, topPosition, null, null, 'right');
-  doc.text('- si nécessaire, par chèque à l\'ordre de Code & Smile', footerColTwo, topPosition);
+  doc.text(`- si nécessaire, par chèque à l\'ordre de ${props.input_3}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('- de préférence, par virement sur le compte bancaire suivant :', footerColTwo, topPosition);
@@ -133,15 +133,15 @@ const Pdf = (props) => {
 
   newLineHeight(marginTextBottom);
   doc.text('Banque  : ', footerColOne, topPosition, null, null, 'right');
-  doc.text('BNPPARB PLESSIS ROBINSON', footerColTwo, topPosition);
+  doc.text(`${props.input_9}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('IBAN  : ', footerColOne, topPosition, null, null, 'right');
-  doc.text('FR76 3000 4002 8100 0100 9113 805', footerColTwo, topPosition);
+  doc.text(`${props.input_10}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('BIC  : ', footerColOne, topPosition, null, null, 'right');
-  doc.text('BNPA FR PP XXX', footerColTwo, topPosition);
+  doc.text(`${props.input_11}`, footerColTwo, topPosition);
 
   doc.line(marginLeft, topPosition + 4, marginRight, topPosition + 4); // x, start y, width, end y
 
@@ -151,7 +151,7 @@ const Pdf = (props) => {
   doc.text(textLines, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2.5);
-  doc.text('Code & Smile, SARL au capital de 1 000 € - N° TVA intracommunautaire : FR 75 822985172 - SIREN : 822 985 172 R.C.S. Nanterre', marginLeft, topPosition);
+  doc.text(`${props.input_8}`, marginLeft, topPosition);
 
   if (window.cordova) {
     // For save iPhone :
