@@ -63,7 +63,7 @@ const Pdf = (props) => {
   doc.setFont('helvetica', 'normal');
   doc.text(`${props.input_12}`, marginLeft, topPosition);
   doc.text('Date :', marginRight - 28, topPosition, null, null, 'right');
-  doc.text('26/10/2017', marginRight, topPosition, null, null, 'right');
+  doc.text(`${props.input_0}`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.text(`${props.input_13}`, marginLeft, topPosition);
