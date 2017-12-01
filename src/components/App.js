@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Button, Card, Row, Input, Col } from 'react-materialize';
 import Pdf from './Pdf';
 
@@ -14,7 +15,10 @@ export default class App extends React.Component {
   }
 
   handleInputChange(e) {
-    this.state.data[e.target.id] = e.target.value;
+    const input = e.target;
+    const valueInput = input.classList && input.classList.contains('picker__input') ? moment(new Date(input.value)).format('DD/MM/YYYY') : input.value;
+
+    this.state.data[input.id] = valueInput;
     localStorage.setItem('data', JSON.stringify(this.state.data));
   }
 
@@ -46,7 +50,7 @@ export default class App extends React.Component {
             </div>
             <Card title="Informations">
               <Row>
-                <Input type="date" label="Date" s={12} />
+                <Input type="date" label="Date" s={12}  defaultValue={this.state.data.input_0} onChange={this.handleInputChange} />
                 <Input label="Numéro de facture" s={12} defaultValue={this.state.data.input_1} onChange={this.handleInputChange} />
                 <Input label="Objet de la facture" s={12} defaultValue={this.state.data.input_2} onChange={this.handleInputChange} />
               </Row>
@@ -87,7 +91,7 @@ export default class App extends React.Component {
                 <Input label="Tarif journalier" s={12} defaultValue={this.state.data.input_18} onChange={this.handleInputChange} />
                 <Input label="Nombre de jour travaillé" s={12} defaultValue={this.state.data.input_19} onChange={this.handleInputChange} />
                 {/* <Input label="Date limite de paiement" s={12} defaultValue={this.state.data.input_20} onChange={this.handleInputChange} /> */}
-                <Input type="date" label="Date limite de paiement" s={12} />
+                <Input type="date" label="Date limite de paiement" s={12} onChange={this.handleInputChange} />
               </Row>
             </Card>
           </Col>
