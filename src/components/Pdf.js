@@ -8,6 +8,8 @@ const colThree = 159;
 const footerColOne = 75;
 const footerColTwo = footerColOne;
 
+const convertFormat = num => new Intl.NumberFormat('en-EN', { minimumFractionDigits: 2 }).format(num);
+
 const Pdf = (props) => {
   let topPosition = 0;
 
@@ -88,26 +90,27 @@ const Pdf = (props) => {
   newLineHeight(marginTextBottom + 6);
   doc.setFont('helvetica', 'normal');
   doc.text(`${props.input_16}`, marginLeft, topPosition);
-  doc.text(`${props.input_18} €`, colTwo, topPosition, null, null, 'right');
+  doc.text(`${convertFormat(props.input_18)} €`, colTwo, topPosition, null, null, 'right');
   doc.text(`${props.input_19}`, colThree, topPosition, null, null, 'right');
-  doc.text(`${(props.input_18 * props.input_19)} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${convertFormat(props.input_18 * props.input_19)} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.text(`${props.input_17}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom + 10);
   doc.text('Sous-total H.T.', colThree, topPosition, null, null, 'right');
-  doc.text(`${(props.input_18 * props.input_19)} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${convertFormat(props.input_18 * props.input_19)} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.text('T.V.A. 20%', colThree, topPosition, null, null, 'right');
-  doc.text(`${(props.input_18 * props.input_19) * 0.20} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${convertFormat((props.input_18 * props.input_19) * 0.20)} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
   doc.text('Total TTC à payer', colThree, topPosition, null, null, 'right');
-  doc.text(`${(props.input_18 * props.input_19) + ((props.input_18 * props.input_19) * 0.20)} €`, marginRight, topPosition, null, null, 'right');
+
+  doc.text(`${convertFormat((props.input_18 * props.input_19) + ((props.input_18 * props.input_19) * 0.20))} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom + 65);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
