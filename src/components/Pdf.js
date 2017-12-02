@@ -123,7 +123,7 @@ const Pdf = (props) => {
 
   newLineHeight(marginTextBottom);
   doc.text('Mode de paiement : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`- si nécessaire, par chèque à l\'ordre de ${props.input_3}`, footerColTwo, topPosition);
+  doc.text(`- si nécessaire, par chèque à l'ordre de ${props.input_3}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('- de préférence, par virement sur le compte bancaire suivant :', footerColTwo, topPosition);
