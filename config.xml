@@ -7,6 +7,7 @@
     <author email="freelance@ljamal.net" href="http://ljamal.net">
         Lionel JAMAL
     </author>
+    <icon src="src/assets/icon_app/ios/Icon.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
