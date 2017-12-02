@@ -76,7 +76,7 @@ const Pdf = (props) => {
   newLineHeight(marginTextBottom);
   doc.text(`N° de TVA Intra : ${props.input_15}`, marginLeft, topPosition);
 
-  newLineHeight(marginTextBottom * 2);
+  newLineHeight(marginTextBottom);
   doc.setDrawColor(56, 56, 57);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
   doc.setFont('helvetica', 'bold');
@@ -112,7 +112,7 @@ const Pdf = (props) => {
 
   doc.text(`${convertFormat((props.input_18 * props.input_19) + ((props.input_18 * props.input_19) * 0.20))} €`, marginRight, topPosition, null, null, 'right');
 
-  newLineHeight(marginTextBottom + 65);
+  newLineHeight(marginTextBottom + 71);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
 
   newLineHeight(marginTextBottom);
