@@ -30,7 +30,7 @@ const Pdf = (props) => {
   doc.setTextColor(56, 56, 57);
 
   newLineHeight(20);
-  doc.text(`${props.input_3}`, marginLeft, topPosition);
+  doc.text(`${props.compagnyName}`, marginLeft, topPosition);
   // doc.text(`Code & Smile ${props.input_1}!`, marginLeft, 28);
   doc.setTextColor('#8a8a8a');
   doc.text('FACTURE', marginRight, topPosition, null, null, 'right');
@@ -39,16 +39,16 @@ const Pdf = (props) => {
   doc.setFontSize(12);
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.input_4}`, marginLeft, topPosition);
+  doc.text(`${props.compagnyAdress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`Tel : ${props.input_5}`, marginLeft, topPosition);
+  doc.text(`Tel : ${props.compagnyPhone}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`E-mail : ${props.input_6}`, marginLeft, topPosition);
+  doc.text(`E-mail : ${props.compagnyMail}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2);
-  doc.text(`Objet : ${props.input_2}`, marginLeft, topPosition);
+  doc.text(`Objet : ${props.invoiceObject}`, marginLeft, topPosition);
 
   doc.setLineWidth(0.3);
   doc.setDrawColor(184, 184, 184);
@@ -59,22 +59,22 @@ const Pdf = (props) => {
   doc.setFont('helvetica', 'bold');
   doc.text('Adressée à :', marginLeft, topPosition);
   doc.text('Facture n° :', marginRight - 28, topPosition, null, null, 'right');
-  doc.text(`${props.input_1}`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${props.invoiceNumber}`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.setFont('helvetica', 'normal');
-  doc.text(`${props.input_12}`, marginLeft, topPosition);
+  doc.text(`${props.clientName}`, marginLeft, topPosition);
   doc.text('Date :', marginRight - 28, topPosition, null, null, 'right');
-  doc.text(`${props.input_0}`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${props.invoiceDate}`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.input_13}`, marginLeft, topPosition);
+  doc.text(`${props.clientAdress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`SIREN : ${props.input_14}`, marginLeft, topPosition);
+  doc.text(`SIREN : ${props.clientSIREN}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`N° de TVA Intra : ${props.input_15}`, marginLeft, topPosition);
+  doc.text(`N° de TVA Intra : ${props.clientVAT}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.setDrawColor(56, 56, 57);
@@ -89,28 +89,28 @@ const Pdf = (props) => {
 
   newLineHeight(marginTextBottom + 6);
   doc.setFont('helvetica', 'normal');
-  doc.text(`${props.input_16}`, marginLeft, topPosition);
-  doc.text(`${convertFormat(props.input_18)} €`, colTwo, topPosition, null, null, 'right');
-  doc.text(`${props.input_19}`, colThree, topPosition, null, null, 'right');
-  doc.text(`${convertFormat(props.input_18 * props.input_19)} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${props.prestationType1}`, marginLeft, topPosition);
+  doc.text(`${convertFormat(props.price)} €`, colTwo, topPosition, null, null, 'right');
+  doc.text(`${props.numberDayOfWork}`, colThree, topPosition, null, null, 'right');
+  doc.text(`${convertFormat(props.price * props.numberDayOfWork)} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.input_17}`, marginLeft, topPosition);
+  doc.text(`${props.prestationType2}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom + 10);
   doc.text('Sous-total H.T.', colThree, topPosition, null, null, 'right');
-  doc.text(`${convertFormat(props.input_18 * props.input_19)} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${convertFormat(props.price * props.numberDayOfWork)} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.text('T.V.A. 20%', colThree, topPosition, null, null, 'right');
-  doc.text(`${convertFormat((props.input_18 * props.input_19) * 0.20)} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${convertFormat((props.price * props.numberDayOfWork) * 0.20)} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom);
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
   doc.text('Total TTC à payer', colThree, topPosition, null, null, 'right');
 
-  doc.text(`${convertFormat((props.input_18 * props.input_19) + ((props.input_18 * props.input_19) * 0.20))} €`, marginRight, topPosition, null, null, 'right');
+  doc.text(`${convertFormat((props.price * props.numberDayOfWork) + ((props.price * props.numberDayOfWork) * 0.20))} €`, marginRight, topPosition, null, null, 'right');
 
   newLineHeight(marginTextBottom + 71);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
@@ -119,11 +119,11 @@ const Pdf = (props) => {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   doc.text('Date limite de paiement : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`${props.input_20}`, footerColTwo, topPosition);
+  doc.text(`${props.paymentPeriod}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('Mode de paiement : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`- si nécessaire, par chèque à l'ordre de ${props.input_3}`, footerColTwo, topPosition);
+  doc.text(`- si nécessaire, par chèque à l'ordre de ${props.compagnyName}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('- de préférence, par virement sur le compte bancaire suivant :', footerColTwo, topPosition);
@@ -136,15 +136,15 @@ const Pdf = (props) => {
 
   newLineHeight(marginTextBottom);
   doc.text('Banque  : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`${props.input_9}`, footerColTwo, topPosition);
+  doc.text(`${props.bankName}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('IBAN  : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`${props.input_10}`, footerColTwo, topPosition);
+  doc.text(`${props.BankIBAN}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('BIC  : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`${props.input_11}`, footerColTwo, topPosition);
+  doc.text(`${props.BankBIC}`, footerColTwo, topPosition);
 
   doc.line(marginLeft, topPosition + 4, marginRight, topPosition + 4); // x, start y, width, end y
 
@@ -154,7 +154,7 @@ const Pdf = (props) => {
   doc.text(textLines, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2.5);
-  doc.text(`${props.input_8}`, marginLeft, topPosition);
+  doc.text(`${props.legalInfos}`, marginLeft, topPosition);
 
   if (window.cordova) {
     // For save iPhone :

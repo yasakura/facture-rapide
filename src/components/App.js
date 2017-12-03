@@ -1,102 +1,42 @@
+// https://vectr.com/tmp/crdx4QfuE/a117CmEqx6-> icone
+
 import React from 'react';
-import moment from 'moment';
-import { Button, Card, Row, Input, Col } from 'react-materialize';
-import Pdf from './Pdf';
+import PropTypes from 'prop-types';
+import {
+  Framework7App,
+  Navbar,
+  Page,
+  Pages,
+  Statusbar,
+  View,
+  Views,
+} from 'framework7-react';
+import Form from './Form';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: JSON.parse(localStorage.getItem('data')) || {},
-    };
+const MainViews = (props, context) => (
+  <Views>
+    <View id="main-view" navbarThrough dynamicNavbar main url="/">
+      {context.framework7AppContext.theme.ios ? (
+        <Navbar title="Invoices" />
+      ) : null}
+      <Pages>
+        <Page>
+          <Form />
+        </Page>
+      </Pages>
+    </View>
+  </Views>
+);
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.createPDF = this.createPDF.bind(this);
-  }
+MainViews.contextTypes = {
+  framework7AppContext: PropTypes.object,
+};
 
-  handleInputChange(e) {
-    const input = e.target;
-    const valueInput = input.classList && input.classList.contains('picker__input') ? moment(new Date(input.value)).format('DD/MM/YYYY') : input.value;
+const App = () => (
+  <Framework7App themeType="ios">
+    <Statusbar />
+    <MainViews />
+  </Framework7App>
+);
 
-    this.state.data[input.id] = valueInput;
-    localStorage.setItem('data', JSON.stringify(this.state.data));
-  }
-
-  createPDF() {
-    // alert(`PDF : ${JSON.stringify(this.state.data)}`);
-
-    if (window.cordova) {
-      window.cordova.plugins.pdf.htmlToPDF({
-        url: Pdf(this.state.data),
-        documentSize: 'A4',
-        landscape: 'portrait',
-        type: 'share',
-        fileName: 'toto.pdf',
-      }, (success) => this.success, (error) => alert('error:' + error));
-    } else {
-      Pdf(this.state.data);
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <h2 className="center-align">Création d&apos;une facture</h2>
-        <Row>
-          <Col s={12}>
-
-            <div className="center-align">
-              <Button onClick={this.createPDF}>Créer la facture</Button>
-            </div>
-            <Card title="Informations">
-              <Row>
-                <Input type="date" label="Date" s={12}  defaultValue={this.state.data.input_0} onChange={this.handleInputChange} />
-                <Input label="Numéro de facture" s={12} defaultValue={this.state.data.input_1} onChange={this.handleInputChange} />
-                <Input label="Objet de la facture" s={12} defaultValue={this.state.data.input_2} onChange={this.handleInputChange} />
-              </Row>
-            </Card>
-
-            <Card title="Mon entreprise">
-              <Row>
-                <Input label="Nom" s={12} defaultValue={this.state.data.input_3} onChange={this.handleInputChange} />
-                <Input label="Adresse" s={12} defaultValue={this.state.data.input_4} onChange={this.handleInputChange} />
-                <Input label="Téléphone" s={12} defaultValue={this.state.data.input_5} onChange={this.handleInputChange} />
-                <Input label="Email" s={12} type="email" defaultValue={this.state.data.input_6} onChange={this.handleInputChange} />
-                <Input label="SIREN" s={12} defaultValue={this.state.data.input_7} onChange={this.handleInputChange} />
-                <Input label="Informations légales" s={12} defaultValue={this.state.data.input_8} onChange={this.handleInputChange} />
-              </Row>
-            </Card>
-
-            <Card title="Coordonnées bancaire de mon entreprise">
-              <Row>
-                <Input label="Nom de la banque" s={12} defaultValue={this.state.data.input_9} onChange={this.handleInputChange} />
-                <Input label="IBAN" s={12} defaultValue={this.state.data.input_10} onChange={this.handleInputChange} />
-                <Input label="BIC" s={12} defaultValue={this.state.data.input_11} onChange={this.handleInputChange} />
-              </Row>
-            </Card>
-
-            <Card title="Client">
-              <Row>
-                <Input label="Nom" s={12} defaultValue={this.state.data.input_12} onChange={this.handleInputChange} />
-                <Input label="Adresse" s={12} defaultValue={this.state.data.input_13} onChange={this.handleInputChange} />
-                <Input label="SIREN" s={12} defaultValue={this.state.data.input_14} onChange={this.handleInputChange} />
-                <Input label="Numéro de TVA intracommunautaire" s={12} defaultValue={this.state.data.input_15} onChange={this.handleInputChange} />
-              </Row>
-            </Card>
-
-            <Card title="Prestation">
-              <Row>
-                <Input label="Description (ligne 1)" s={12} defaultValue={this.state.data.input_16} onChange={this.handleInputChange} />
-                <Input label="Description (ligne 2)" s={12} defaultValue={this.state.data.input_17} onChange={this.handleInputChange} />
-                <Input label="Tarif journalier" s={12} defaultValue={this.state.data.input_18} onChange={this.handleInputChange} />
-                <Input label="Nombre de jour travaillé" s={12} defaultValue={this.state.data.input_19} onChange={this.handleInputChange} />
-                {/* <Input label="Date limite de paiement" s={12} defaultValue={this.state.data.input_20} onChange={this.handleInputChange} /> */}
-                <Input type="date" label="Date limite de paiement" s={12} onChange={this.handleInputChange} />
-              </Row>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
+export default App;

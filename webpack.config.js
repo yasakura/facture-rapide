@@ -21,10 +21,10 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: [
-          path.resolve(__dirname, "src"),
+          path.resolve(__dirname, 'src'),
         ],
         exclude: [
-          path.resolve(__dirname, "node_modules"),
+          path.resolve(__dirname, 'node_modules'),
         ],
         loader: 'babel-loader',
         options: {
@@ -32,9 +32,17 @@ module.exports = {
           presets: babelSettings,
         },
       },
+      {
+        test: /\.css$/,
+        loader: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(jpe?g|png|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+        loader: 'url-loader?limit=100000',
+      },
     ],
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   context: __dirname,
   plugins: [
     HTMLWebpackPluginConfig,
