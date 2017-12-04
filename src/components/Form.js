@@ -19,7 +19,41 @@ export default class Form extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.setDefaultData = this.setDefaultData.bind(this);
     this.createPDF = this.createPDF.bind(this);
+  }
+
+  componentDidMount() {
+    this.setDefaultData();
+  }
+
+  setDefaultData() {
+    const data = this.state.data;
+
+    const defaultData = {
+      BankBIC: data.BankBIC || '-',
+      BankIBAN: data.BankIBAN || '-',
+      bankName: data.bankName || '-',
+      clientAdress: data.clientAdress || '-',
+      clientName: data.clientName || '-',
+      clientSIREN: data.clientSIREN || '-',
+      clientVAT: data.clientVAT || '-',
+      compagnyAdress: data.compagnyAdress || '-',
+      compagnyMail: data.compagnyMail || '-',
+      compagnyName: data.compagnyName || '-',
+      compagnyPhone: data.compagnyPhone || '-',
+      invoiceDate: data.invoiceDate || '-',
+      invoiceNumber: data.invoiceNumber || '-',
+      invoiceObject: data.invoiceObject || '-',
+      legalInfos: data.legalInfos || '-',
+      numberDayOfWork: data.numberDayOfWork || 0,
+      paymentPeriod: data.paymentPeriod || '-',
+      prestationType1: data.prestationType1 || '-',
+      prestationType2: data.prestationType2 || '-',
+      price: data.price || 0,
+    };
+
+    this.state.data = defaultData;
   }
 
   handleInputChange(e) {
