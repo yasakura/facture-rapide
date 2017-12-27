@@ -7,6 +7,7 @@
   "scripts": {
     "ios": "rm -rf www && webpack --config webpack.config.js && cordova run ios",
     "start": "webpack-dev-server",
+    "newFont": "mkdir -p dist && node node_modules/jspdf-customfonts/makeFonts.js && mv ./dist/default_vfs.js ./src/assets/default_vfs.js && rm -rf ./dist",
     "cordova": "cordova $1"
   },
   "author": "Apache Cordova Team",
