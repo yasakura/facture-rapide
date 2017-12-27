@@ -10,6 +10,9 @@ import {
 } from 'framework7-react';
 import Pdf from './Pdf';
 import Input from './Input';
+import Select from './Select';
+
+const customer = true;
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -19,6 +22,7 @@ export default class Form extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.selectTheme = this.selectTheme.bind(this);
     this.setDefaultData = this.setDefaultData.bind(this);
     this.createPDF = this.createPDF.bind(this);
   }
@@ -49,8 +53,9 @@ export default class Form extends React.Component {
       numberDayOfWork: data.numberDayOfWork || 0,
       paymentPeriod: data.paymentPeriod || '-',
       prestationType1: data.prestationType1 || '-',
-      prestationType2: data.prestationType2 || '-',
+      prestationType2: data.prestationType2 || '',
       price: data.price || 0,
+      theme: data.theme || 'base',
     };
 
     this.state.data = defaultData;
@@ -65,6 +70,10 @@ export default class Form extends React.Component {
 
     localStorage.setItem('data', JSON.stringify(data));
     this.setState({ data });
+  }
+
+  selectTheme(e) {
+    this.setState({ theme: e.target.value });
   }
 
   createPDF() {
@@ -104,6 +113,15 @@ export default class Form extends React.Component {
             <FormLabel>Info. légales</FormLabel>
             <Input defaultValue={this.state.data.legalInfos} name="legalInfos" onChange={this.handleInputChange} />
           </ListItem>
+          {customer &&
+          <ListItem>
+            <FormLabel>Theme</FormLabel>
+            <Select value={this.state.data.theme} name="theme" onChange={this.handleInputChange} >
+              <option value="base">Base</option>
+              <option value="openSans">OpenSans</option>
+            </Select>
+          </ListItem>
+          }
         </List>
 
         <ContentBlockTitle>Mon entreprise</ContentBlockTitle>
