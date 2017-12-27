@@ -85,7 +85,7 @@ export default class Form extends React.Component {
         documentSize: 'A4',
         landscape: 'portrait',
         type: 'share',
-        fileName: 'toto.pdf',
+        fileName: 'invoice.pdf',
       });
     } else {
       Pdf(this.state.data);

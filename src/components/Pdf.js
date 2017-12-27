@@ -4,17 +4,17 @@ import {
 } from './themes';
 
 const Pdf = (props) => {
-  let test = null;
+  let pdfBase64 = null;
   switch (props.theme) {
     case 'openSans':
-      test = OpenSans(props);
+      pdfBase64 = OpenSans(props);
       break;
     default:
-      test = Base(props);
+      pdfBase64 = Base(props);
       break;
   }
 
-  return test;
+  return pdfBase64;
 };
 
 export default Pdf;
