@@ -12,7 +12,7 @@ import Pdf from './Pdf';
 import Input from './Input';
 import Select from './Select';
 
-const customer = true;
+const isCustomer = true;
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -113,7 +113,7 @@ export default class Form extends React.Component {
             <FormLabel>Info. légales</FormLabel>
             <Input defaultValue={this.state.data.legalInfos} name="legalInfos" onChange={this.handleInputChange} />
           </ListItem>
-          {customer &&
+          {isCustomer &&
           <ListItem>
             <FormLabel>Theme</FormLabel>
             <Select value={this.state.data.theme} name="theme" onChange={this.handleInputChange} >
