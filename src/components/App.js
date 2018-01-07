@@ -15,7 +15,7 @@ import Form from './Form';
 
 const MainViews = (props, context) => (
   <Views>
-    <View id="main-view" navbarThrough dynamicNavbar main url="/">
+    <View id="main-view" main url="/">
       {context.framework7AppContext.theme.ios ? (
         <Navbar title="Invoices" />
       ) : null}
