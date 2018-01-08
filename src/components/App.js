@@ -17,7 +17,7 @@ const MainViews = (props, context) => (
   <Views>
     <View id="main-view" main url="/">
       {context.framework7AppContext.theme.ios ? (
-        <Navbar title="Invoices" />
+        <Navbar title="Rapide facture" />
       ) : null}
       <Pages>
         <Page>
