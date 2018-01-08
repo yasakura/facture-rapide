@@ -31,7 +31,7 @@ const Base = (props) => {
   doc.setTextColor(56, 56, 57);
 
   newLineHeight(20);
-  doc.text(`${props.compagnyName}`, marginLeft, topPosition);
+  doc.text(`${props.companyName}`, marginLeft, topPosition);
   // doc.text(`Code & Smile ${props.input_1}!`, marginLeft, 28);
   doc.setTextColor('#8a8a8a');
   doc.text('FACTURE', marginRight, topPosition, null, null, 'right');
@@ -40,13 +40,13 @@ const Base = (props) => {
   doc.setFontSize(12);
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.compagnyAdress}`, marginLeft, topPosition);
+  doc.text(`${props.companyAdress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`Tel : ${props.compagnyPhone}`, marginLeft, topPosition);
+  doc.text(`Tel : ${props.companyPhone}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
-  doc.text(`E-mail : ${props.compagnyMail}`, marginLeft, topPosition);
+  doc.text(`E-mail : ${props.companyMail}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2);
   doc.text(`Objet : ${props.invoiceObject}`, marginLeft, topPosition);
@@ -124,7 +124,7 @@ const Base = (props) => {
 
   newLineHeight(marginTextBottom);
   doc.text('Mode de paiement : ', footerColOne, topPosition, null, null, 'right');
-  doc.text(`- si nécessaire, par chèque à l'ordre de ${props.compagnyName}`, footerColTwo, topPosition);
+  doc.text(`- si nécessaire, par chèque à l'ordre de ${props.companyName}`, footerColTwo, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text('- de préférence, par virement sur le compte bancaire suivant :', footerColTwo, topPosition);
@@ -155,7 +155,7 @@ const Base = (props) => {
   doc.text(textLines, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom * 2.5);
-  doc.text(`${props.legalInfos}`, marginLeft, topPosition);
+  doc.text(`${props.companyName}, ${props.companyType} au capital de ${props.companyCapital} - N° TVA intracommunautaire : ${props.companyVatNumber} - SIREN : ${props.companySiren}`, marginLeft, topPosition);
 
   if (window.cordova) {
     // For save iPhone :

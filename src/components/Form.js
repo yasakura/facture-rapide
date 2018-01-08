@@ -42,10 +42,14 @@ export default class Form extends React.Component {
       clientName: data.clientName || '-',
       clientSIREN: data.clientSIREN || '-',
       clientVAT: data.clientVAT || '-',
-      compagnyAdress: data.compagnyAdress || '-',
-      compagnyMail: data.compagnyMail || '-',
-      compagnyName: data.compagnyName || '-',
-      compagnyPhone: data.compagnyPhone || '-',
+      companyAdress: data.companyAdress || '-',
+      companyCapital: data.companyCapital || '-',
+      companyMail: data.companyMail || '-',
+      companyName: data.companyName || '-',
+      companyPhone: data.companyPhone || '-',
+      companySiren: data.companySiren || '-',
+      companyType: data.companyType || '-',
+      companyVatNumber: data.companyVatNumber || '-',
       invoiceDate: data.invoiceDate || '-',
       invoiceNumber: data.invoiceNumber || '-',
       invoiceObject: data.invoiceObject || '-',
@@ -128,19 +132,35 @@ export default class Form extends React.Component {
         <List form>
           <ListItem>
             <FormLabel>Nom</FormLabel>
-            <Input defaultValue={this.state.data.compagnyName} name="compagnyName" onChange={this.handleInputChange} />
+            <Input defaultValue={this.state.data.companyName} name="companyName" onChange={this.handleInputChange} />
           </ListItem>
           <ListItem>
             <FormLabel>Adresse</FormLabel>
-            <Input defaultValue={this.state.data.compagnyAdress} name="compagnyAdress" onChange={this.handleInputChange} />
+            <Input defaultValue={this.state.data.companyAdress} name="companyAdress" onChange={this.handleInputChange} />
           </ListItem>
           <ListItem>
             <FormLabel>Téléphone</FormLabel>
-            <Input defaultValue={this.state.data.compagnyPhone} name="compagnyPhone" onChange={this.handleInputChange} />
+            <Input defaultValue={this.state.data.companyPhone} name="companyPhone" onChange={this.handleInputChange} />
           </ListItem>
           <ListItem>
             <FormLabel>Email</FormLabel>
-            <Input defaultValue={this.state.data.compagnyMail} name="compagnyMail" onChange={this.handleInputChange} />
+            <Input defaultValue={this.state.data.companyMail} name="companyMail" onChange={this.handleInputChange} />
+          </ListItem>
+          <ListItem>
+            <FormLabel>Statut social</FormLabel>
+            <Input defaultValue={this.state.data.companyType} name="companyType" onChange={this.handleInputChange} />
+          </ListItem>
+          <ListItem>
+            <FormLabel>Capital</FormLabel>
+            <Input defaultValue={this.state.data.companyCapital} name="companyCapital" onChange={this.handleInputChange} />
+          </ListItem>
+          <ListItem>
+            <FormLabel>Num. de TVA</FormLabel>
+            <Input defaultValue={this.state.data.companyVatNumber} name="companyVatNumber" onChange={this.handleInputChange} />
+          </ListItem>
+          <ListItem>
+            <FormLabel>SIREN</FormLabel>
+            <Input defaultValue={this.state.data.companySiren} name="companySiren" onChange={this.handleInputChange} />
           </ListItem>
         </List>
 
