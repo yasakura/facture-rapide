@@ -6,9 +6,9 @@ const Input = ({ defaultValue, name, onChange, placeholder, type }) => (
     <input
       defaultValue={defaultValue}
       name={name}
-      type={type}
-      placeholder={placeholder}
       onChange={onChange}
+      placeholder={placeholder}
+      type={type}
     />
   </div>
 );
