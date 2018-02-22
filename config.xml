@@ -27,6 +27,7 @@
         <icon height="80" src="src/assets/ios/icon_app/icon-40@2x.png" width="80" />
         <icon height="120" src="src/assets/ios/icon_app/icon-60@2x.png" width="120" />
         <icon height="57" src="src/assets/ios/icon_app/icon.png" width="57" />
+        <icon height="1024" src="src/assets/ios/icon_app/icon-1024.png" width="1024" />
         <splash src="src/assets/ios/screen/Default@2x~iphone~anyany.png" />
         <splash src="src/assets/ios/screen/Default@2x~iphone~comany.png" />
         <splash src="src/assets/ios/screen/Default@2x~iphone~comcom.png" />

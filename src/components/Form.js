@@ -12,7 +12,7 @@ import Pdf from './Pdf';
 import Input from './Input';
 import Select from './Select';
 
-const isCustomer = true;
+const isCustomer = false;
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -47,13 +47,13 @@ export default class Form extends React.Component {
       companyMail: data.companyMail || '-',
       companyName: data.companyName || '-',
       companyPhone: data.companyPhone || '-',
+      compagnyRCS: data.compagnyRCS || '-',
       companySiren: data.companySiren || '-',
       companyType: data.companyType || '-',
       companyVatNumber: data.companyVatNumber || '-',
       invoiceDate: data.invoiceDate || '-',
       invoiceNumber: data.invoiceNumber || '-',
       invoiceObject: data.invoiceObject || '-',
-      legalInfos: data.legalInfos || '-',
       numberDayOfWork: data.numberDayOfWork || 0,
       paymentPeriod: data.paymentPeriod || '-',
       prestationType1: data.prestationType1 || '-',
@@ -67,7 +67,10 @@ export default class Form extends React.Component {
 
   handleInputChange(e) {
     const input = e.target;
-    const valueInput = input.type === 'date' ? moment(new Date(input.value)).format('DD/MM/YYYY') : input.value;
+    const valueInput =
+      input.type === 'date'
+        ? moment(new Date(input.value)).format('DD/MM/YYYY')
+        : input.value;
     const data = { ...this.state.data };
 
     data[input.name] = valueInput;
@@ -103,64 +106,116 @@ export default class Form extends React.Component {
         <List form>
           <ListItem>
             <FormLabel>Date</FormLabel>
-            <Input name="invoiceDate" onChange={this.handleInputChange} type="date" />
+            <Input
+              name="invoiceDate"
+              onChange={this.handleInputChange}
+              type="date"
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Numéro</FormLabel>
-            <Input defaultValue={this.state.data.invoiceNumber} name="invoiceNumber" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.invoiceNumber}
+              name="invoiceNumber"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Objet</FormLabel>
-            <Input defaultValue={this.state.data.invoiceObject} name="invoiceObject" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.invoiceObject}
+              name="invoiceObject"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
-          <ListItem>
-            <FormLabel>Info. légales</FormLabel>
-            <Input defaultValue={this.state.data.legalInfos} name="legalInfos" onChange={this.handleInputChange} />
-          </ListItem>
-          {isCustomer &&
-          <ListItem>
-            <FormLabel>Theme</FormLabel>
-            <Select value={this.state.data.theme} name="theme" onChange={this.handleInputChange} >
-              <option value="base">Base</option>
-              <option value="openSans">OpenSans</option>
-            </Select>
-          </ListItem>
-          }
+          {isCustomer && (
+            <ListItem>
+              <FormLabel>Theme</FormLabel>
+              <Select
+                value={this.state.data.theme}
+                name="theme"
+                onChange={this.handleInputChange}
+              >
+                <option value="base">Base</option>
+                <option value="openSans">OpenSans</option>
+              </Select>
+            </ListItem>
+          )}
         </List>
 
         <ContentBlockTitle>Mon entreprise</ContentBlockTitle>
         <List form>
           <ListItem>
             <FormLabel>Nom</FormLabel>
-            <Input defaultValue={this.state.data.companyName} name="companyName" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyName}
+              name="companyName"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Adresse</FormLabel>
-            <Input defaultValue={this.state.data.companyAdress} name="companyAdress" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyAdress}
+              name="companyAdress"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Téléphone</FormLabel>
-            <Input defaultValue={this.state.data.companyPhone} name="companyPhone" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyPhone}
+              name="companyPhone"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Email</FormLabel>
-            <Input defaultValue={this.state.data.companyMail} name="companyMail" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyMail}
+              name="companyMail"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Statut social</FormLabel>
-            <Input defaultValue={this.state.data.companyType} name="companyType" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyType}
+              name="companyType"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Capital</FormLabel>
-            <Input defaultValue={this.state.data.companyCapital} name="companyCapital" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyCapital}
+              name="companyCapital"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Num. de TVA</FormLabel>
-            <Input defaultValue={this.state.data.companyVatNumber} name="companyVatNumber" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companyVatNumber}
+              name="companyVatNumber"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>SIREN</FormLabel>
-            <Input defaultValue={this.state.data.companySiren} name="companySiren" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.companySiren}
+              name="companySiren"
+              onChange={this.handleInputChange}
+            />
+          </ListItem>
+          <ListItem>
+            <FormLabel>RCS</FormLabel>
+            <Input
+              defaultValue={this.state.data.compagnyRCS}
+              name="compagnyRCS"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
         </List>
 
@@ -168,15 +223,28 @@ export default class Form extends React.Component {
         <List form>
           <ListItem>
             <FormLabel>Banque</FormLabel>
-            <Input defaultValue={this.state.data.bankName} name="bankName" placeholder="Nom de la banque" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.bankName}
+              name="bankName"
+              placeholder="Nom de la banque"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>IBAN</FormLabel>
-            <Input defaultValue={this.state.data.BankIBAN} name="BankIBAN" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.BankIBAN}
+              name="BankIBAN"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>BIC</FormLabel>
-            <Input defaultValue={this.state.data.BankBIC} name="BankBIC" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.BankBIC}
+              name="BankBIC"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
         </List>
 
@@ -184,19 +252,35 @@ export default class Form extends React.Component {
         <List form>
           <ListItem>
             <FormLabel>Nom</FormLabel>
-            <Input defaultValue={this.state.data.clientName} name="clientName" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.clientName}
+              name="clientName"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Adresse</FormLabel>
-            <Input defaultValue={this.state.data.clientAdress} name="clientAdress" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.clientAdress}
+              name="clientAdress"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>SIREN</FormLabel>
-            <Input defaultValue={this.state.data.clientSIREN} name="clientSIREN" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.clientSIREN}
+              name="clientSIREN"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>TVA intra.</FormLabel>
-            <Input defaultValue={this.state.data.clientVAT} name="clientVAT" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.clientVAT}
+              name="clientVAT"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
         </List>
 
@@ -204,28 +288,54 @@ export default class Form extends React.Component {
         <List form>
           <ListItem>
             <FormLabel>Description</FormLabel>
-            <Input defaultValue={this.state.data.prestationType1} name="prestationType1" placeholder="Ligne 1" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.prestationType1}
+              name="prestationType1"
+              placeholder="Ligne 1"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel />
-            <Input defaultValue={this.state.data.prestationType2} name="prestationType2" placeholder="Ligne 2" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.prestationType2}
+              name="prestationType2"
+              placeholder="Ligne 2"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Tarif/jour</FormLabel>
-            <Input defaultValue={this.state.data.price} name="price" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.price}
+              name="price"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Nb de jour</FormLabel>
-            <Input defaultValue={this.state.data.numberDayOfWork} name="numberDayOfWork" placeholder="Nombre de jour travaillé" onChange={this.handleInputChange} />
+            <Input
+              defaultValue={this.state.data.numberDayOfWork}
+              name="numberDayOfWork"
+              placeholder="Nombre de jour travaillé"
+              onChange={this.handleInputChange}
+            />
           </ListItem>
           <ListItem>
             <FormLabel>Paiement</FormLabel>
-            <Input name="paymentPeriod" placeholder="Date limite de paiement" onChange={this.handleInputChange} type="date" />
+            <Input
+              name="paymentPeriod"
+              placeholder="Date limite de paiement"
+              onChange={this.handleInputChange}
+              type="date"
+            />
           </ListItem>
         </List>
 
         <ContentBlock>
-          <Button big fill color="green" onClick={this.createPDF}>Créer la facture</Button>
+          <Button big fill color="green" onClick={this.createPDF}>
+            Créer la facture
+          </Button>
         </ContentBlock>
       </div>
     );
