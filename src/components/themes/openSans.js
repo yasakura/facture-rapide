@@ -253,9 +253,9 @@ const OpenSans = (props) => {
   doc.text(
     `${props.companyName}, ${props.companyType} au capital de ${
       props.companyCapital
-    } - RCS ${props.compagnyRCS} - N° TVA intracommunautaire : ${
-      props.companyVatNumber
-    } - SIREN : ${props.companySiren}`,
+    } - N° TVA intracommunautaire : ${props.companyVatNumber} - SIREN : ${
+      props.companySiren
+    } R.C.S. ${props.compagnyRCS}`,
     marginLeft,
     topPosition
   );
@@ -265,7 +265,7 @@ const OpenSans = (props) => {
     return doc.output('datauri');
   }
   // For test browser
-  // return doc.output('dataurlnewwindow');
+  // return doc.output('dataurlnewwindow')
 
   // For save Browser :
   // return doc.save('toto.pdf');
