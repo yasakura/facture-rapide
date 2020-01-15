@@ -1,6 +1,4 @@
 {
-  // Prettier & ESLint
-  "prettier.eslintIntegration": true,
   "prettier.arrowParens": "always",
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
