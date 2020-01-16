@@ -5,7 +5,7 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
-    "ios": "rm -rf www && webpack --config webpack.config.js && cordova run ios",
+    "build-cordova": "rm -rf www && webpack --config webpack.config.js",
     "start": "webpack-dev-server",
     "newFont": "mkdir -p dist && node node_modules/jspdf-customfonts/makeFonts.js && mv ./dist/default_vfs.js ./src/assets/default_vfs.js && rm -rf ./dist",
     "cordova": "cordova $1"
@@ -23,14 +23,14 @@
     "html-webpack-plugin": "2.29.0",
     "path": "0.12.7",
     "webpack": "3.0.0",
-    "webpack-dev-server": "2.5.0"
+    "webpack-dev-server": "2.11.5"
   },
   "dependencies": {
     "babel-plugin-transform-object-assign": "6.22.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-stage-3": "6.24.1",
     "cordova": "7.1.0",
-    "cordova-ios": "4.5.4",
+    "cordova-ios": "^4.5.5",
     "cordova-pdf-generator": "1.9.3",
     "cordova-plugin-whitelist": "1.3.2",
     "css-loader": "0.28.7",
