@@ -7,8 +7,7 @@ const Pdf = (props) => {
       pdfBase64 = OpenSans(props);
       break;
     default:
-      pdfBase64 = OpenSans(props);
-      // pdfBase64 = Base(props);
+      pdfBase64 = Base(props);
       break;
   }
 

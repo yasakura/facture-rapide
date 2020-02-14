@@ -15,3 +15,11 @@ body{
   padding-top: constant(safe-area-inset-top) !important;
   padding-top: env(safe-area-inset-top) !important;
 }
+
+.list-block .item-title {
+  white-space: initial;
+}
+
+.list-block .item-title.label {
+  width: 40%;
+}

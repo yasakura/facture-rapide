@@ -1,6 +1,7 @@
 import JsPDF from 'jspdf-customfonts';
 import CustomFonts from '../../assets/default_vfs';
 
+// eslint-disable-next-line consistent-return
 const OpenSans = (props) => {
   CustomFonts(JsPDF.API);
 
@@ -22,12 +23,26 @@ const OpenSans = (props) => {
     return topPosition;
   };
 
+  function getVatRate() {
+    return props.companyVatActive
+      ? props.price * props.numberDayOfWork * (props.companyVatRate / 100)
+      : 0;
+  }
+
+  function getPriceTotal() {
+    return convertFormat(props.price * props.numberDayOfWork + getVatRate());
+  }
+
   const doc = new JsPDF({
     orientation: 'p',
     unit: 'mm',
     format: 'a4',
     lineHeight: 1.5,
   });
+
+  function splitTextToSize(text, size) {
+    return doc.splitTextToSize(text, size);
+  }
 
   doc.addFileToVFS('../assets/default_vfs.js');
   doc.addFont('OpenSans-Light.ttf', 'OpenSans', 'lighter');
@@ -41,7 +56,6 @@ const OpenSans = (props) => {
 
   newLineHeight(20);
   doc.text(`${props.companyName}`, marginLeft, topPosition);
-  // doc.text(`Code & Smile ${props.input_1}!`, marginLeft, 28);
   doc.setTextColor('#8a8a8a');
   doc.text('FACTURE', marginRight, topPosition, null, null, 'right');
 
@@ -50,7 +64,7 @@ const OpenSans = (props) => {
   doc.setFontSize(11);
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.companyAdress}`, marginLeft, topPosition);
+  doc.text(`${props.companyAddress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text(`Tel : ${props.companyPhone}`, marginLeft, topPosition);
@@ -93,7 +107,7 @@ const OpenSans = (props) => {
   );
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.clientAdress}`, marginLeft, topPosition);
+  doc.text(`${props.clientAddress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text(`SIREN : ${props.clientSIREN}`, marginLeft, topPosition);
@@ -114,7 +128,12 @@ const OpenSans = (props) => {
 
   newLineHeight(marginTextBottom + 6);
   doc.setFont('OpenSans', 'lighter');
-  doc.text(`${props.prestationType1}`, marginLeft, topPosition);
+  // const lines = doc.splitTextToSize(`${props.prestationType}`, 100);
+  doc.text(
+    splitTextToSize(`${props.prestationType}`, 100),
+    marginLeft,
+    topPosition
+  );
   doc.text(
     `${convertFormat(props.price)} €`,
     colTwo,
@@ -140,11 +159,15 @@ const OpenSans = (props) => {
     'right'
   );
 
-  newLineHeight(marginTextBottom);
-  doc.text(`${props.prestationType2}`, marginLeft, topPosition);
-
   newLineHeight(marginTextBottom + 10);
-  doc.text('Sous-total H.T.', colThree, topPosition, null, null, 'right');
+  doc.text(
+    `Sous-total ${props.companyVatActive ? 'T.T.C' : 'H.T.'}`,
+    colThree,
+    topPosition,
+    null,
+    null,
+    'right'
+  );
   doc.text(
     `${convertFormat(props.price * props.numberDayOfWork)} €`,
     marginRight,
@@ -155,26 +178,41 @@ const OpenSans = (props) => {
   );
 
   newLineHeight(marginTextBottom);
-  doc.text('T.V.A. 20%', colThree, topPosition, null, null, 'right');
+  if (props.companyVatActive) {
+    doc.text(
+      `T.V.A. ${props.companyVatRate} %`,
+      colThree,
+      topPosition,
+      null,
+      null,
+      'right'
+    );
+    doc.text(
+      `${convertFormat(
+        props.price * props.numberDayOfWork * (props.companyVatRate / 100)
+      )} €`,
+      marginRight,
+      topPosition,
+      null,
+      null,
+      'right'
+    );
+  }
+
+  newLineHeight(marginTextBottom);
+  doc.setFontSize(14);
+  doc.setFont('OpenSans', 'bold');
   doc.text(
-    `${convertFormat(props.price * props.numberDayOfWork * 0.2)} €`,
-    marginRight,
-    topPosition,
+    `Total ${props.companyVatActive ? 'T.T.C' : 'H.T.'} à payer`,
+    colThree,
+    topPosition + 2,
     null,
     null,
     'right'
   );
 
-  newLineHeight(marginTextBottom);
-  doc.setFontSize(14);
-  doc.setFont('OpenSans', 'bold');
-  doc.text('Total TTC à payer', colThree, topPosition + 2, null, null, 'right');
-
   doc.text(
-    `${convertFormat(
-      props.price * props.numberDayOfWork +
-        props.price * props.numberDayOfWork * 0.2
-    )} €`,
+    `${getPriceTotal()} €`,
     marginRight,
     topPosition + 2,
     null,
@@ -182,7 +220,22 @@ const OpenSans = (props) => {
     'right'
   );
 
-  newLineHeight(marginTextBottom + 71);
+  if (!props.companyVatActive) {
+    newLineHeight(marginTextBottom + 1);
+    doc.setFont('OpenSans', 'lighter');
+    doc.setFontSize(7);
+    doc.text(
+      splitTextToSize(`${props.companyVatExemptionText}`, 78),
+      // props.companyVatExemptionText,
+      118,
+      topPosition,
+      null,
+      null,
+      'left'
+    );
+  }
+
+  newLineHeight(marginTextBottom + 81);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
 
   newLineHeight(marginTextBottom);
@@ -207,15 +260,15 @@ const OpenSans = (props) => {
     null,
     'right'
   );
-  doc.text(
-    `- si nécessaire, par chèque à l'ordre de ${props.companyName}`,
-    footerColTwo,
-    topPosition
-  );
+  // doc.text(
+  //   `- si nécessaire, par chèque à l'ordre de ${props.companyName}`,
+  //   footerColTwo,
+  //   topPosition
+  // );
 
-  newLineHeight(marginTextBottom);
+  // newLineHeight(marginTextBottom);
   doc.text(
-    '- de préférence, par virement sur le compte bancaire suivant :',
+    'par virement sur le compte bancaire suivant :',
     footerColTwo,
     topPosition
   );
@@ -223,22 +276,22 @@ const OpenSans = (props) => {
   newLineHeight(marginTextBottom);
   doc.setDrawColor(56, 56, 57);
   doc.line(marginLeft, topPosition, marginRight, topPosition); // x, start y, width, end y
-  doc.line(marginLeft, topPosition, marginLeft, topPosition + 22);
-  doc.line(marginRight, topPosition, marginRight, topPosition + 22);
+  doc.line(marginLeft, topPosition, marginLeft, topPosition + 16);
+  doc.line(marginRight, topPosition, marginRight, topPosition + 16);
 
-  newLineHeight(marginTextBottom);
+  newLineHeight(4);
   doc.text('Banque  : ', footerColOne, topPosition, null, null, 'right');
   doc.text(`${props.bankName}`, footerColTwo, topPosition);
 
-  newLineHeight(marginTextBottom);
+  newLineHeight(5);
   doc.text('IBAN  : ', footerColOne, topPosition, null, null, 'right');
   doc.text(`${props.BankIBAN}`, footerColTwo, topPosition);
 
-  newLineHeight(marginTextBottom);
+  newLineHeight(5);
   doc.text('BIC  : ', footerColOne, topPosition, null, null, 'right');
   doc.text(`${props.BankBIC}`, footerColTwo, topPosition);
 
-  doc.line(marginLeft, topPosition + 4, marginRight, topPosition + 4); // x, start y, width, end y
+  doc.line(marginLeft, topPosition + 2, marginRight, topPosition + 2); // x, start y, width, end y
 
   newLineHeight(marginTextBottom * 1.7);
   const textEnd =
@@ -251,11 +304,17 @@ const OpenSans = (props) => {
 
   newLineHeight(marginTextBottom * 2.5);
   doc.text(
-    `${props.companyName}, ${props.companyType} au capital de ${
-      props.companyCapital
-    } - N° TVA intracommunautaire : ${props.companyVatNumber} - SIREN : ${
-      props.companySiren
-    } R.C.S. ${props.compagnyRCS}`,
+    `${props.companyName}, ${props.companyType}${
+      props.companyCapital !== ''
+        ? ` au capital de ${props.companyCapital} € - `
+        : ''
+    }${
+      props.companyVatNumber !== ''
+        ? `N° TVA intracommunautaire : ${props.companyVatNumber} - `
+        : ''
+    }SIREN : ${props.companySiren} ${
+      props.companyRCS !== '' ? `R.C.S. ${props.companyRCS}` : ''
+    }`,
     marginLeft,
     topPosition
   );
@@ -264,11 +323,9 @@ const OpenSans = (props) => {
     // For save iPhone :
     return doc.output('datauri');
   }
-  // For test browser
-  // return doc.output('dataurlnewwindow')
 
   // For save Browser :
-  // return doc.save('toto.pdf');
+  return doc.save('toto.pdf');
 };
 
 export default OpenSans;

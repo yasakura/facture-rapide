@@ -41,7 +41,7 @@ const Base = (props) => {
   doc.setFontSize(12);
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.companyAdress}`, marginLeft, topPosition);
+  doc.text(`${props.companyAddress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text(`Tel : ${props.companyPhone}`, marginLeft, topPosition);
@@ -84,7 +84,7 @@ const Base = (props) => {
   );
 
   newLineHeight(marginTextBottom);
-  doc.text(`${props.clientAdress}`, marginLeft, topPosition);
+  doc.text(`${props.clientAddress}`, marginLeft, topPosition);
 
   newLineHeight(marginTextBottom);
   doc.text(`SIREN : ${props.clientSIREN}`, marginLeft, topPosition);
@@ -242,11 +242,7 @@ const Base = (props) => {
 
   newLineHeight(marginTextBottom * 2.5);
   doc.text(
-    `${props.companyName}, ${props.companyType} au capital de ${
-      props.companyCapital
-    } - N° TVA intracommunautaire : ${props.companyVatNumber} - SIREN : ${
-      props.companySiren
-    } R.C.S. ${props.compagnyRCS}`,
+    `${props.companyName}, ${props.companyType} au capital de ${props.companyCapital} - N° TVA intracommunautaire : ${props.companyVatNumber} - SIREN : ${props.companySiren} R.C.S. ${props.companyRCS}`,
     marginLeft,
     topPosition
   );

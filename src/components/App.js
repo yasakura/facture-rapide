@@ -12,17 +12,16 @@ import {
   Views,
 } from 'framework7-react';
 import Form from './Form';
+import MyCompany from './MyCompany';
 
 const MainViews = (props, context) => (
   <Views>
-    <View id="main-view" navbarThrough dynamicNavbar main url="/">
+    <View id="main-view" dynamicNavbar main url="/">
       {context.framework7AppContext.theme.ios ? (
-        <Navbar title="Rapide facture" />
+        <Navbar title="Facture rapide" />
       ) : null}
       <Pages>
-        <Page>
-          <Form />
-        </Page>
+        <Form />
       </Pages>
     </View>
   </Views>
@@ -33,7 +32,15 @@ MainViews.contextTypes = {
 };
 
 const App = () => (
-  <Framework7App themeType="ios">
+  <Framework7App
+    themeType="ios"
+    routes={[
+      {
+        path: '/my-company/',
+        component: MyCompany,
+      },
+    ]}
+  >
     <Statusbar />
     <MainViews />
   </Framework7App>

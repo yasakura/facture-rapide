@@ -1,68 +1,71 @@
 import React from 'react';
 import moment from 'moment';
 import {
-  FormLabel,
-  ContentBlock,
   Button,
+  ContentBlock,
   ContentBlockTitle,
+  FormInput,
+  FormLabel,
   List,
   ListItem,
+  Page,
 } from 'framework7-react';
 import Pdf from './Pdf';
 import Input from './Input';
 import Select from './Select';
+import defaultData from '../conf/default_data';
 
-const isCustomer = false;
+const IS_CUSTOMER = false;
+
+function getLocalStorage() {
+  return JSON.parse(localStorage.getItem('data')) || {};
+}
 
 export default class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: JSON.parse(localStorage.getItem('data')) || {},
-    };
+    this.state = {};
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.getFileName = this.getFileName.bind(this);
     this.selectTheme = this.selectTheme.bind(this);
     this.setDefaultData = this.setDefaultData.bind(this);
     this.createPDF = this.createPDF.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setDefaultData();
   }
 
   setDefaultData() {
-    const data = this.state.data;
-
-    const defaultData = {
-      BankBIC: data.BankBIC || '-',
-      BankIBAN: data.BankIBAN || '-',
-      bankName: data.bankName || '-',
-      clientAdress: data.clientAdress || '-',
-      clientName: data.clientName || '-',
-      clientSIREN: data.clientSIREN || '-',
-      clientVAT: data.clientVAT || '-',
-      companyAdress: data.companyAdress || '-',
-      companyCapital: data.companyCapital || '-',
-      companyMail: data.companyMail || '-',
-      companyName: data.companyName || '-',
-      companyPhone: data.companyPhone || '-',
-      compagnyRCS: data.compagnyRCS || '-',
-      companySiren: data.companySiren || '-',
-      companyType: data.companyType || '-',
-      companyVatNumber: data.companyVatNumber || '-',
-      invoiceDate: data.invoiceDate || '-',
-      invoiceNumber: data.invoiceNumber || '-',
-      invoiceObject: data.invoiceObject || '-',
-      numberDayOfWork: data.numberDayOfWork || 0,
-      paymentPeriod: data.paymentPeriod || '-',
-      prestationType1: data.prestationType1 || '-',
-      prestationType2: data.prestationType2 || '',
-      price: data.price || 0,
-      theme: data.theme || 'base',
+    this.state.data = {
+      ...defaultData,
+      ...getLocalStorage(),
+      ...this.state.data,
     };
+  }
 
-    this.state.data = defaultData;
+  getFileName() {
+    const invoiceNumber = this.state.data.invoiceNumber;
+    return invoiceNumber ? `_${invoiceNumber}` : '';
+  }
+
+  createPDF() {
+    if (window.cordova) {
+      window.cordova.plugins.pdf.htmlToPDF({
+        url: Pdf(getLocalStorage()),
+        documentSize: 'A4',
+        landscape: 'portrait',
+        type: 'share',
+        fileName: `Facture${this.getFileName()}.pdf`,
+      });
+    } else {
+      Pdf(getLocalStorage());
+    }
+  }
+
+  selectTheme(e) {
+    this.setState({ theme: e.target.value });
   }
 
   handleInputChange(e) {
@@ -71,7 +74,7 @@ export default class Form extends React.Component {
       input.type === 'date'
         ? moment(new Date(input.value)).format('DD/MM/YYYY')
         : input.value;
-    const data = { ...this.state.data };
+    const data = { ...defaultData, ...getLocalStorage() };
 
     data[input.name] = valueInput;
 
@@ -79,29 +82,14 @@ export default class Form extends React.Component {
     this.setState({ data });
   }
 
-  selectTheme(e) {
-    this.setState({ theme: e.target.value });
-  }
-
-  createPDF() {
-    // alert(`PDF : ${JSON.stringify(this.state.data)}`);
-
-    if (window.cordova) {
-      window.cordova.plugins.pdf.htmlToPDF({
-        url: Pdf(this.state.data),
-        documentSize: 'A4',
-        landscape: 'portrait',
-        type: 'share',
-        fileName: `Facture_${this.state.data.invoiceNumber}.pdf`,
-      });
-    } else {
-      Pdf(this.state.data);
-    }
-  }
-
   render() {
+    const data = getLocalStorage();
     return (
-      <div>
+      <Page>
+        <List>
+          <ListItem link="/my-company/" title="Mon entreprise" />
+        </List>
+
         <ContentBlockTitle>Facture</ContentBlockTitle>
         <List form>
           <ListItem>
@@ -115,7 +103,7 @@ export default class Form extends React.Component {
           <ListItem>
             <FormLabel>Numéro</FormLabel>
             <Input
-              defaultValue={this.state.data.invoiceNumber}
+              defaultValue={data.invoiceNumber}
               name="invoiceNumber"
               onChange={this.handleInputChange}
             />
@@ -123,16 +111,16 @@ export default class Form extends React.Component {
           <ListItem>
             <FormLabel>Objet</FormLabel>
             <Input
-              defaultValue={this.state.data.invoiceObject}
+              defaultValue={data.invoiceObject}
               name="invoiceObject"
               onChange={this.handleInputChange}
             />
           </ListItem>
-          {isCustomer && (
+          {IS_CUSTOMER && (
             <ListItem>
               <FormLabel>Theme</FormLabel>
               <Select
-                value={this.state.data.theme}
+                value={data.theme}
                 name="theme"
                 onChange={this.handleInputChange}
               >
@@ -143,117 +131,12 @@ export default class Form extends React.Component {
           )}
         </List>
 
-        <ContentBlockTitle>Mon entreprise</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel>Nom</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyName}
-              name="companyName"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Adresse</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyAdress}
-              name="companyAdress"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Téléphone</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyPhone}
-              name="companyPhone"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Email</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyMail}
-              name="companyMail"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Statut social</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyType}
-              name="companyType"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Capital</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyCapital}
-              name="companyCapital"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Num. de TVA</FormLabel>
-            <Input
-              defaultValue={this.state.data.companyVatNumber}
-              name="companyVatNumber"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>SIREN</FormLabel>
-            <Input
-              defaultValue={this.state.data.companySiren}
-              name="companySiren"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>RCS</FormLabel>
-            <Input
-              defaultValue={this.state.data.compagnyRCS}
-              name="compagnyRCS"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-        </List>
-
-        <ContentBlockTitle>Mes coordonées bancaire</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel>Banque</FormLabel>
-            <Input
-              defaultValue={this.state.data.bankName}
-              name="bankName"
-              placeholder="Nom de la banque"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>IBAN</FormLabel>
-            <Input
-              defaultValue={this.state.data.BankIBAN}
-              name="BankIBAN"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>BIC</FormLabel>
-            <Input
-              defaultValue={this.state.data.BankBIC}
-              name="BankBIC"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-        </List>
-
         <ContentBlockTitle>Client</ContentBlockTitle>
         <List form>
           <ListItem>
             <FormLabel>Nom</FormLabel>
             <Input
-              defaultValue={this.state.data.clientName}
+              defaultValue={data.clientName}
               name="clientName"
               onChange={this.handleInputChange}
             />
@@ -261,15 +144,15 @@ export default class Form extends React.Component {
           <ListItem>
             <FormLabel>Adresse</FormLabel>
             <Input
-              defaultValue={this.state.data.clientAdress}
-              name="clientAdress"
+              defaultValue={data.clientAddress}
+              name="clientAddress"
               onChange={this.handleInputChange}
             />
           </ListItem>
           <ListItem>
             <FormLabel>SIREN</FormLabel>
             <Input
-              defaultValue={this.state.data.clientSIREN}
+              defaultValue={data.clientSIREN}
               name="clientSIREN"
               onChange={this.handleInputChange}
             />
@@ -277,37 +160,29 @@ export default class Form extends React.Component {
           <ListItem>
             <FormLabel>TVA intra.</FormLabel>
             <Input
-              defaultValue={this.state.data.clientVAT}
+              defaultValue={data.clientVAT}
               name="clientVAT"
               onChange={this.handleInputChange}
             />
           </ListItem>
         </List>
-
         <ContentBlockTitle>Prestation</ContentBlockTitle>
         <List form>
           <ListItem>
-            <FormLabel>Description</FormLabel>
-            <Input
-              defaultValue={this.state.data.prestationType1}
-              name="prestationType1"
-              placeholder="Ligne 1"
+            <FormLabel style={{ alignSelf: 'flex-start' }}>
+              Description
+            </FormLabel>
+            <FormInput
+              name="prestationType"
               onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel />
-            <Input
-              defaultValue={this.state.data.prestationType2}
-              name="prestationType2"
-              placeholder="Ligne 2"
-              onChange={this.handleInputChange}
+              type="textarea"
+              value={data.prestationType}
             />
           </ListItem>
           <ListItem>
             <FormLabel>Tarif/jour</FormLabel>
             <Input
-              defaultValue={this.state.data.price}
+              defaultValue={data.price}
               name="price"
               onChange={this.handleInputChange}
             />
@@ -315,7 +190,7 @@ export default class Form extends React.Component {
           <ListItem>
             <FormLabel>Nb de jour</FormLabel>
             <Input
-              defaultValue={this.state.data.numberDayOfWork}
+              defaultValue={data.numberDayOfWork}
               name="numberDayOfWork"
               placeholder="Nombre de jour travaillé"
               onChange={this.handleInputChange}
@@ -331,13 +206,12 @@ export default class Form extends React.Component {
             />
           </ListItem>
         </List>
-
         <ContentBlock>
           <Button big fill color="green" onClick={this.createPDF}>
             Créer la facture
           </Button>
         </ContentBlock>
-      </div>
+      </Page>
     );
   }
 }
