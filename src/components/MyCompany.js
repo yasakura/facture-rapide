@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import {
-  FormInput,
-  FormLabel,
-  ContentBlockTitle,
+  BlockTitle,
   List,
+  ListInput,
   ListItem,
-  Page,
   Navbar,
+  Page,
+  Toggle,
 } from 'framework7-react';
-import Input from './Input';
-import Checkbox from './Checkbox';
 import defaultData from '../conf/default_data';
 
 function getLocalStorage() {
@@ -48,13 +46,10 @@ class MyCompany extends Component {
     this.setState({ data });
   }
 
-  handleCheckboxChange(e) {
-    const input = e.target;
-    const inputName = input.attributes['data-name'].value;
+  handleCheckboxChange(status, name) {
     const data = { ...defaultData, ...getLocalStorage() };
-    const newCheckedStatus = !data[inputName];
 
-    data[inputName] = newCheckedStatus;
+    data[name] = status;
 
     localStorage.setItem('data', JSON.stringify(data));
     this.setState({ data });
@@ -64,153 +59,148 @@ class MyCompany extends Component {
     const data = { ...defaultData, ...getLocalStorage() };
     return (
       <Page>
-        <Navbar title="Facture rapide" backLink="Retour" />
+        <Navbar title="Facture rapide" backLink="Retour" sliding={false} />
 
-        <ContentBlockTitle>Mon entreprise</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel>Nom</FormLabel>
-            <Input
-              defaultValue={data.companyName}
-              name="companyName"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Adresse</FormLabel>
-            <Input
-              defaultValue={data.companyAddress}
-              name="companyAddress"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Téléphone</FormLabel>
-            <Input
-              defaultValue={data.companyPhone}
-              name="companyPhone"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Email</FormLabel>
-            <Input
-              defaultValue={data.companyMail}
-              name="companyMail"
-              onChange={this.handleInputChange}
-              type="email"
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Statut social</FormLabel>
-            <Input
-              defaultValue={data.companyType}
-              name="companyType"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Capital</FormLabel>
-            <Input
-              defaultValue={data.companyCapital}
-              name="companyCapital"
-              onChange={this.handleInputChange}
-              type="number"
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>SIREN</FormLabel>
-            <Input
-              defaultValue={data.companySiren}
-              name="companySiren"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>RCS</FormLabel>
-            <Input
-              defaultValue={data.companyRCS}
-              name="companyRCS"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
+        <BlockTitle>Mon entreprise</BlockTitle>
+        <List inlineLabels>
+          <ListInput
+            defaultValue={data.companyName}
+            label="Nom"
+            name="companyName"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.companyAddress}
+            label="Adresse"
+            name="companyAddress"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.companyPhone}
+            label="Téléphone"
+            name="companyPhone"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.companyMail}
+            label="Email"
+            name="companyMail"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="email"
+          />
+          <ListInput
+            defaultValue={data.companyType}
+            label="Statut social"
+            name="companyType"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.companyCapital}
+            label="Capital"
+            name="companyCapital"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.companySiren}
+            label="SIREN"
+            name="companySiren"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.companyRCS}
+            label="RCS"
+            name="companyRCS"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
         </List>
 
-        <ContentBlockTitle>TVA</ContentBlockTitle>
-        <List form>
+        <BlockTitle>TVA</BlockTitle>
+        <List>
           <ListItem>
-            <FormLabel>Actif</FormLabel>
-            <Checkbox
-              isChecked={data.companyVatActive}
+            <span>Actif</span>
+            <Toggle
+              defaultChecked={data.companyVatActive}
               name="companyVatActive"
-              onClick={this.handleCheckboxChange}
+              onToggleChange={(status) =>
+                this.handleCheckboxChange(status, 'companyVatActive')
+              }
             />
           </ListItem>
-
           {this.state.data.companyVatActive === true && (
-            <ListItem>
-              <FormLabel>Taux</FormLabel>
-              <Input
-                defaultValue={data.companyVatRate}
-                name="companyVatRate"
-                onChange={this.handleInputChange}
-                type="number"
-              />
-            </ListItem>
+            <ListInput
+              defaultValue={data.companyVatRate}
+              inlineLabel
+              label="Taux"
+              name="companyVatRate"
+              onChange={this.handleInputChange}
+              placeholder="-"
+              type="text"
+            />
           )}
-
           {this.state.data.companyVatActive === true && (
-            <ListItem>
-              <FormLabel>Num. de TVA</FormLabel>
-              <Input
-                defaultValue={data.companyVatNumber}
-                name="companyVatNumber"
-                onChange={this.handleInputChange}
-              />
-            </ListItem>
+            <ListInput
+              defaultValue={data.companyVatNumber}
+              inlineLabel
+              label="Num. de TVA"
+              name="companyVatNumber"
+              onChange={this.handleInputChange}
+              placeholder="-"
+              type="text"
+            />
           )}
-
           {this.state.data.companyVatActive === false && (
-            <ListItem>
-              <FormLabel style={{ alignSelf: 'flex-start' }}>
-                Texte d&#039;exonération
-              </FormLabel>
-              <FormInput
-                name="companyVatExemptionText"
-                onChange={this.handleInputChange}
-                type="textarea"
-                value={data.companyVatExemptionText}
-              />
-            </ListItem>
+            <ListInput
+              defaultValue={data.companyVatExemptionText}
+              label="Texte d&#039;exonération"
+              name="companyVatExemptionText"
+              onChange={this.handleInputChange}
+              type="textarea"
+              inlineLabel={false}
+            />
           )}
         </List>
-        <ContentBlockTitle>Coordonées bancaire</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel>Banque</FormLabel>
-            <Input
-              defaultValue={data.bankName}
-              name="bankName"
-              placeholder="Nom de la banque"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>IBAN</FormLabel>
-            <Input
-              defaultValue={data.BankIBAN}
-              name="BankIBAN"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>BIC</FormLabel>
-            <Input
-              defaultValue={data.BankBIC}
-              name="BankBIC"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
+
+        <BlockTitle>Coordonées bancaire</BlockTitle>
+        <List inlineLabels>
+          <ListInput
+            defaultValue={data.bankName}
+            label="Banque"
+            name="bankName"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.BankIBAN}
+            label="IBAN"
+            name="BankIBAN"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.BankBIC}
+            label="BIC"
+            name="BankBIC"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
         </List>
       </Page>
     );

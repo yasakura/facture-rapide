@@ -1,27 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import moment from 'moment';
 import {
+  Block,
+  BlockTitle,
   Button,
-  ContentBlock,
-  ContentBlockTitle,
-  FormInput,
-  FormLabel,
   List,
+  ListInput,
   ListItem,
+  Navbar,
   Page,
 } from 'framework7-react';
 import Pdf from './Pdf';
-import Input from './Input';
-import Select from './Select';
 import defaultData from '../conf/default_data';
-
-const IS_CUSTOMER = false;
 
 function getLocalStorage() {
   return JSON.parse(localStorage.getItem('data')) || {};
 }
 
-export default class Form extends React.Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -86,132 +82,120 @@ export default class Form extends React.Component {
     const data = getLocalStorage();
     return (
       <Page>
+        <Navbar title="Facture rapide" sliding={false} />
+
         <List>
           <ListItem link="/my-company/" title="Mon entreprise" />
         </List>
 
-        <ContentBlockTitle>Facture</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel>Date</FormLabel>
-            <Input
-              name="invoiceDate"
-              onChange={this.handleInputChange}
-              type="date"
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Numéro</FormLabel>
-            <Input
-              defaultValue={data.invoiceNumber}
-              name="invoiceNumber"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Objet</FormLabel>
-            <Input
-              defaultValue={data.invoiceObject}
-              name="invoiceObject"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          {IS_CUSTOMER && (
-            <ListItem>
-              <FormLabel>Theme</FormLabel>
-              <Select
-                value={data.theme}
-                name="theme"
-                onChange={this.handleInputChange}
-              >
-                <option value="base">Base</option>
-                <option value="openSans">OpenSans</option>
-              </Select>
-            </ListItem>
-          )}
+        <BlockTitle>Facture</BlockTitle>
+        <List inlineLabels>
+          <ListInput
+            label="Date"
+            name="invoiceDate"
+            onChange={this.handleInputChange}
+            type="date"
+          />
+          <ListInput
+            defaultValue={data.invoiceNumber}
+            label="Numéro"
+            name="invoiceNumber"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.invoiceObject}
+            label="Objet"
+            name="invoiceObject"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
         </List>
 
-        <ContentBlockTitle>Client</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel>Nom</FormLabel>
-            <Input
-              defaultValue={data.clientName}
-              name="clientName"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Adresse</FormLabel>
-            <Input
-              defaultValue={data.clientAddress}
-              name="clientAddress"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>SIREN</FormLabel>
-            <Input
-              defaultValue={data.clientSIREN}
-              name="clientSIREN"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>TVA intra.</FormLabel>
-            <Input
-              defaultValue={data.clientVAT}
-              name="clientVAT"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
+        <BlockTitle>Client</BlockTitle>
+        <List inlineLabels>
+          <ListInput
+            defaultValue={data.clientName}
+            label="Nom"
+            name="clientName"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.clientAddress}
+            label="Adresse"
+            name="clientAddress"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.clientSIREN}
+            label="SIREN"
+            name="clientSIREN"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.clientVAT}
+            label="TVA intra."
+            name="clientVAT"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
         </List>
-        <ContentBlockTitle>Prestation</ContentBlockTitle>
-        <List form>
-          <ListItem>
-            <FormLabel style={{ alignSelf: 'flex-start' }}>
-              Description
-            </FormLabel>
-            <FormInput
-              name="prestationType"
-              onChange={this.handleInputChange}
-              type="textarea"
-              value={data.prestationType}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Tarif/jour</FormLabel>
-            <Input
-              defaultValue={data.price}
-              name="price"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Nb de jour</FormLabel>
-            <Input
-              defaultValue={data.numberDayOfWork}
-              name="numberDayOfWork"
-              placeholder="Nombre de jour travaillé"
-              onChange={this.handleInputChange}
-            />
-          </ListItem>
-          <ListItem>
-            <FormLabel>Paiement</FormLabel>
-            <Input
-              name="paymentPeriod"
-              placeholder="Date limite de paiement"
-              onChange={this.handleInputChange}
-              type="date"
-            />
-          </ListItem>
+
+        <BlockTitle>Prestation</BlockTitle>
+        <List>
+          <ListInput
+            defaultValue={data.prestationType}
+            label="Description"
+            name="prestationType"
+            onChange={this.handleInputChange}
+            type="textarea"
+          />
+          <ListInput
+            defaultValue={data.price}
+            inlineLabel
+            label="Tarif/jour"
+            name="price"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.numberDayOfWork}
+            inlineLabel
+            label="Nb de jour"
+            name="numberDayOfWork"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="text"
+          />
+          <ListInput
+            defaultValue={data.paymentPeriod}
+            inlineLabel
+            label="Paiement"
+            name="paymentPeriod"
+            onChange={this.handleInputChange}
+            placeholder="-"
+            type="date"
+          />
         </List>
-        <ContentBlock>
+
+        <Block>
           <Button big fill color="green" onClick={this.createPDF}>
             Créer la facture
           </Button>
-        </ContentBlock>
+        </Block>
       </Page>
     );
   }
 }
+
+export default Form;
