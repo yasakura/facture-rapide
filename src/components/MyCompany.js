@@ -85,7 +85,7 @@ class MyCompany extends Component {
             name="companyPhone"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="text"
+            type="number"
           />
           <ListInput
             defaultValue={data.companyMail}
@@ -109,7 +109,7 @@ class MyCompany extends Component {
             name="companyCapital"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="text"
+            type="number"
           />
           <ListInput
             defaultValue={data.companySiren}
@@ -117,7 +117,7 @@ class MyCompany extends Component {
             name="companySiren"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="text"
+            type="number"
           />
           <ListInput
             defaultValue={data.companyRCS}
@@ -149,7 +149,7 @@ class MyCompany extends Component {
               name="companyVatRate"
               onChange={this.handleInputChange}
               placeholder="-"
-              type="text"
+              type="number"
             />
           )}
           {this.state.data.companyVatActive === true && (

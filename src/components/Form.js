@@ -166,7 +166,7 @@ class Form extends Component {
             name="price"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="text"
+            type="number"
           />
           <ListInput
             defaultValue={data.numberDayOfWork}
@@ -175,7 +175,7 @@ class Form extends Component {
             name="numberDayOfWork"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="text"
+            type="number"
           />
           <ListInput
             defaultValue={data.paymentPeriod}
