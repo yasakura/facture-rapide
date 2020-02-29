@@ -21,9 +21,9 @@ module.exports = {
   invoiceDate: '',
   invoiceNumber: '',
   invoiceObject: '',
-  numberDayOfWork: 0,
+  numberDayOfWork: '',
   paymentPeriod: '',
   prestationType: '',
-  price: 0,
+  price: '',
   theme: 'openSans',
 };

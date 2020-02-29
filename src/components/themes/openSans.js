@@ -321,11 +321,11 @@ const OpenSans = (props) => {
 
   if (window.cordova) {
     // For save iPhone :
-    return doc.output('datauri');
+    return doc.output('bloburi');
   }
 
   // For save Browser :
-  return doc.save('toto.pdf');
+  // return doc.save('toto.pdf');
 };
 
 export default OpenSans;

@@ -17,16 +17,41 @@ function getLocalStorage() {
   return JSON.parse(localStorage.getItem('data')) || {};
 }
 
+function getFileName() {
+  const data = { ...defaultData, ...getLocalStorage() };
+  const invoiceNumber = data.invoiceNumber;
+  return invoiceNumber !== '' ? `Facture_${invoiceNumber}.pdf` : 'Facture.pdf';
+}
+
+function createPDF() {
+  const isMobileApp = !!window.cordova;
+  if (isMobileApp) {
+    const options = {
+      documentSize: 'A4',
+      type: 'share',
+      fileName: getFileName(),
+    };
+    document.addEventListener('deviceready', () => {
+      window.cordova.plugins.pdf.fromURL(
+        Pdf({ ...defaultData, ...getLocalStorage() }),
+        options
+      );
+      // .then((stat) => console.log('stats', stat))
+      // .catch((error) => console.log('error', error));
+    });
+  } else {
+    Pdf({ ...defaultData, ...getLocalStorage() });
+  }
+}
+
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {};
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.getFileName = this.getFileName.bind(this);
     this.selectTheme = this.selectTheme.bind(this);
     this.setDefaultData = this.setDefaultData.bind(this);
-    this.createPDF = this.createPDF.bind(this);
   }
 
   componentWillMount() {
@@ -39,25 +64,6 @@ class Form extends Component {
       ...getLocalStorage(),
       ...this.state.data,
     };
-  }
-
-  getFileName() {
-    const invoiceNumber = this.state.data.invoiceNumber;
-    return invoiceNumber ? `_${invoiceNumber}` : '';
-  }
-
-  createPDF() {
-    if (window.cordova) {
-      window.cordova.plugins.pdf.htmlToPDF({
-        url: Pdf(getLocalStorage()),
-        documentSize: 'A4',
-        landscape: 'portrait',
-        type: 'share',
-        fileName: `Facture${this.getFileName()}.pdf`,
-      });
-    } else {
-      Pdf(getLocalStorage());
-    }
   }
 
   selectTheme(e) {
@@ -79,7 +85,7 @@ class Form extends Component {
   }
 
   render() {
-    const data = getLocalStorage();
+    const data = { ...defaultData, ...getLocalStorage() };
     return (
       <Page>
         <Navbar title="Facture rapide" sliding={false} />
@@ -189,7 +195,16 @@ class Form extends Component {
         </List>
 
         <Block>
-          <Button big fill color="green" onClick={this.createPDF}>
+          <Button
+            big
+            fill
+            color="green"
+            onClick={() =>
+              setTimeout(() => {
+                createPDF();
+              }, 0)
+            }
+          >
             Créer la facture
           </Button>
         </Block>
