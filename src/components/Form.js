@@ -9,6 +9,7 @@ import {
   ListItem,
   Navbar,
   Page,
+  Preloader,
 } from 'framework7-react';
 import Pdf from './Pdf';
 import defaultData from '../conf/default_data';
@@ -23,32 +24,15 @@ function getFileName() {
   return invoiceNumber !== '' ? `Facture_${invoiceNumber}.pdf` : 'Facture.pdf';
 }
 
-function createPDF() {
-  const isMobileApp = !!window.cordova;
-  if (isMobileApp) {
-    const options = {
-      documentSize: 'A4',
-      type: 'share',
-      fileName: getFileName(),
-    };
-    document.addEventListener('deviceready', () => {
-      window.cordova.plugins.pdf.fromURL(
-        Pdf({ ...defaultData, ...getLocalStorage() }),
-        options
-      );
-      // .then((stat) => console.log('stats', stat))
-      // .catch((error) => console.log('error', error));
-    });
-  } else {
-    Pdf({ ...defaultData, ...getLocalStorage() });
-  }
-}
-
 class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      buildInvoice: false,
+    };
 
+    this.buildInvoice = this.buildInvoice.bind(this);
+    this.createPDF = this.createPDF.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.selectTheme = this.selectTheme.bind(this);
     this.setDefaultData = this.setDefaultData.bind(this);
@@ -66,8 +50,43 @@ class Form extends Component {
     };
   }
 
-  selectTheme(e) {
-    this.setState({ theme: e.target.value });
+  selectTheme(event) {
+    this.setState({ theme: event.target.value });
+  }
+
+  buildInvoice() {
+    this.setState((prevState) => ({
+      buildInvoice: !prevState.buildInvoice,
+    }));
+    setTimeout(() => {
+      this.createPDF();
+    }, 1000);
+  }
+
+  createPDF() {
+    const isMobileApp = !!window.cordova;
+    if (isMobileApp) {
+      const options = {
+        documentSize: 'A4',
+        type: 'share',
+        fileName: getFileName(),
+      };
+      document.addEventListener('deviceready', () => {
+        window.cordova.plugins.pdf
+          .fromURL(Pdf({ ...defaultData, ...getLocalStorage() }), options)
+          .then(() =>
+            this.setState((prevState) => ({
+              buildInvoice: !prevState.buildInvoice,
+            }))
+          );
+        // .catch((error) => console.log('error', error));
+      });
+    } else {
+      Pdf({ ...defaultData, ...getLocalStorage() });
+      this.setState((prevState) => ({
+        buildInvoice: !prevState.buildInvoice,
+      }));
+    }
   }
 
   handleInputChange(e) {
@@ -195,17 +214,12 @@ class Form extends Component {
         </List>
 
         <Block>
-          <Button
-            big
-            fill
-            color="green"
-            onClick={() =>
-              setTimeout(() => {
-                createPDF();
-              }, 0)
-            }
-          >
-            Créer la facture
+          <Button big fill color="green" onClick={this.buildInvoice}>
+            {this.state.buildInvoice ? (
+              <Preloader color="white" size={30} />
+            ) : (
+              'Créer la facture'
+            )}
           </Button>
         </Block>
       </Page>

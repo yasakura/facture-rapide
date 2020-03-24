@@ -85,7 +85,7 @@ class MyCompany extends Component {
             name="companyPhone"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="number"
+            type="text"
           />
           <ListInput
             defaultValue={data.companyMail}
@@ -109,7 +109,7 @@ class MyCompany extends Component {
             name="companyCapital"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="number"
+            type="text"
           />
           <ListInput
             defaultValue={data.companySiren}
@@ -117,7 +117,7 @@ class MyCompany extends Component {
             name="companySiren"
             onChange={this.handleInputChange}
             placeholder="-"
-            type="number"
+            type="text"
           />
           <ListInput
             defaultValue={data.companyRCS}
