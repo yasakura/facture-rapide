@@ -43,7 +43,7 @@
     "eslint-plugin-react": "7.4.0",
     "framework7": "3.6.7",
     "framework7-react": "3.6.7",
-    "jspdf": "1.5.3",
+    "jspdf": "2.3.1",
     "jspdf-customfonts": "0.0.3-rc.7",
     "moment": "2.19.3",
     "prettier": "1.19.1",
